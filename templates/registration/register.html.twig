@@ -1,0 +1,82 @@
+{% extends 'base1.html.twig' %}
+
+
+
+
+
+{% block body %}
+
+    <div class="container" style="margin-top: 2rem;">
+
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+
+
+                        <div class="card mb-3">
+
+                            <div class="card-body">
+
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Créer un compte</h5>
+                                </div>
+
+
+                                {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+
+
+
+                                <div class="col-12">
+                                    <label for="yourEmail" class="form-label">Matricule</label>
+                                    <input type="text" name="matricule" required="required" class="form-control" maxlength="5" >
+                                    <div class="invalid-feedback">S'il vous plait entrez votre matricule!</div>
+                                </div>
+                                
+
+
+
+                                <div class="col-12">
+                                    <label for="yourPassword" class="form-label">Mot de passe</label>
+                                    {{ form_widget(form.password.first,{'attr':{'class':'form-control'}}) }}
+                                    <div class="invalid-feedback">S'il vous plait entrez votre mot de passe!</div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="yourPassword" class="form-label">Confirmer votre mot de passe</label>
+                                    {{ form_widget(form.password.second,{'attr':{'class':'form-control'}}) }}
+                                    <div class="invalid-feedback">Veuillez confirmer votre mot de passe !</div>
+                                </div>
+
+{#                                <div class="col-12">#}
+{#                                    <div class="form-check">#}
+{#                                        <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required="">#}
+{#                                        <label class="form-check-label" for="acceptTerms">#}
+{#                                            Je suis d'accord et j'accepte les <a href="#">termes et conditions</a></label>#}
+{#                                        <div class="invalid-feedback">#}
+{#                                            Vous devez accepter avant de soumettre.</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+                                <div class="col-12">
+                                    <button style="margin-top:1rem;" class="btn btn-primary  w-100" type="submit" >Créer un compte </button>
+                                </div>
+                                <div class="col-12">
+                                    <p style="margin-top:2rem;" class="small mb-0 text-center">Vous avez déjà un compte? <a href="{{ path('app_login') }}">Se connecter</a></p>
+                                </div>
+                                {{ form_end(form) }}
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+{% endblock %}

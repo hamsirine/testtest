@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section class="section profile" style="margin-top: 7rem; margin-left: 25rem;">
+        <div class="row">
+
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Changer mot de passe</button>
+                            </li>
+
+{#                            <li class="nav-item">#}
+{#                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">client</button>#}
+{#                            </li>#}
+
+
+                        </ul>
+                           <!-- changer mot de passe -->
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                                {{ form(form) }}
+                            </div>
+
+
+{#                         <!-- utilisateur -->#}
+{#                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">#}
+{#                                <h5 class="card-title">Liste des utilisateurs</h5>#}
+{#                                <form>#}
+
+{#                                </form>#}
+
+{#                            </div>#}
+
+{#                        </div><!-- End Bordered Tabs -->#}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

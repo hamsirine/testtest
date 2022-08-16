@@ -1,0 +1,3 @@
+Nombre de clients   :    17135
+Nombre de pages     :    25137
+Nombre d'enveloppes :    17135

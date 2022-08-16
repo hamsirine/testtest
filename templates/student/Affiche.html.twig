@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Document </title>
+</head>
+
+<body>
+<table border="1">
+    <h1>Liste des students </h1>
+    <button><a href="{{ path('Ajout') }}">Ajouter </a></button>
+
+    <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Delete</th>
+        <th>Update</th>
+
+
+    </tr>
+    <tr {% for s in student %}>
+       <td>{{ s.id }}</td>
+        <td>{{ s.Email }}</td>
+        <td><a href="{{ path('delete',{'id':s.id}) }}">Delete</a></td>
+        <td><a href="{{ path('Update',{'id':s.id}) }}">Update</a></td>
+
+    </tr {% endfor %}>
+</table>
+</body>
+</html>

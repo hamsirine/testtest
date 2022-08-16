@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CalendarController!{% endblock %}
+
+{% block body %}
+  <section id="container" style="margin-left: 22rem; margin-top: 7rem;">
+    <section class="container" >
+      <div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 120px;">
+        <div class="col-lg-9">
+
+          <div class="card">
+            <div class="card-body" style="margin-top: 1rem;">
+
+              <!-- Table with stripped rows -->
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th >Date</th>
+                  <th>Id</th>
+                  <th> Nom de client </th>
+                  <th>Total à traité</th>
+                  <th>Total traité</th>
+                  <th>Reste</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for Jour in Jour %}
+                  <tr>
+                    <td>{{ Jour.date|date('d-m-Y') }}</td>
+                    <td>{{ Jour.num }}</td>
+                    <td><a href="#">{{ Jour.nom_client }}</a></td>
+                    <td>{{ Jour.total }}</td>
+                    <td>{{Jour.total_traite }}</td>
+                    <td>{{Jour.reste }}</td>
+
+                    <td>
+                      <a href="{{ path('supp_ligne',{'id':Jour.id}) }}" class="btn btn-danger btn-sm" title="Remove client"><i class="bi bi-trash"></i></a>
+                    </td>
+
+                  </tr>
+
+
+
+                {% endfor %}
+
+                </tbody>
+              </table>
+              <!-- End small tables -->
+
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    </section>
+
+  </section>
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

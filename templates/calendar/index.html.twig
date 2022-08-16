@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CalendarController!{% endblock %}
+
+{#{% block sidebar %}#}
+{#{% endblock %}#}
+
+{% block body %}
+    <section style="margin-top: 7rem">
+        <span id='loading'></span>
+
+        <div id='calendar'>
+
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            $( ".fc-daygrid-day" ).click(function() {
+                //var date = $(this).attr('date-date') ;
+                //console.log(calendar.formatIso(arg.start));
+            });
+        });
+    </script>
+{% endblock %}
+
+
+{% block footer %}
+{% endblock %}

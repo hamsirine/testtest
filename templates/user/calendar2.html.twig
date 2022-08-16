@@ -1,0 +1,98 @@
+{% extends 'base1.html.twig' %}
+
+{% block sidebar %}
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " href="{{ path('app_user') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Calendrier</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+
+                <a class="nav-link collapsed" href="{{path('app_profile')  }}">
+                    <i class="bi bi-person"></i>
+                    <span>Profile</span>
+                </a>
+            </li><!-- End Profile Page Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{path('app_contact')  }}">
+                    <i class="bi bi-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </li><!-- End Contact Page Nav -->
+
+
+            {% if app.user %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{path('app_logout')  }}">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span>Déconnexion</span>
+                    </a>
+                </li><!-- End Login Page Nav -->
+            {% endif %}
+        </ul>
+    </aside><!-- End Sidebar-->
+{% endblock %}
+
+
+{% block body %}
+    <section id="container" style="margin-left: 22rem; margin-top: 7rem;">
+        <section class="container" >
+            <div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 120px;">
+
+                <div class="col-lg-9">
+
+                    <div class="card">
+                        <div class="card-body" style="margin-top: 1rem;">
+
+                            <!-- Table with stripped rows -->
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th >Date</th>
+                                    <th>Id</th>
+                                    <th> Nom de client </th>
+                                    <th>Total à traité</th>
+                                    <th>Total traité</th>
+                                    <th>Reste</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for Jour in Jour %}
+                                    <tr>
+                                        <td>{{ Jour.date|date('d-m-Y') }}</td>
+                                        <td>{{ Jour.num }}</td>
+                                        <td><a href="#">{{ Jour.nom_client }}</a></td>
+                                        <td>{{ Jour.total }}</td>
+                                        <td>{{Jour.total_traite }}</td>
+                                        <td>{{Jour.reste }}</td>
+                                    </tr>
+
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                            <!-- End small tables -->
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </section>
+
+    </section>
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ClientController!{% endblock %}
+
+{% block body %}
+    <section class="container" >
+        <div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 120px;">
+
+            <div class="col-lg-6">
+
+                <div class="card">
+                    <div class="card-body">
+                        <a href="{{ path('addclient') }}"><i class="ri-arrow-left-circle-fill" style="font-size: 50px;"></i></a>
+                        <h5 class="card-title">Liste des Utilisateurs</h5>
+
+                        <!-- Table with stripped rows -->
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>     <th>Matricule</th>
+                                <th>Rôle</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for Utilisateur in U %}
+                                <tr>
+                                    <td>{{ Utilisateur.Matricule }}</td>
+                                    <td>{{ Utilisateur.Role }}</td>
+
+
+                                    <td>
+                                        <a href="{{ path('supp_client',{'id':Utilisateur.id}) }}" class="btn btn-danger btn-sm" title="Remove client" onclick="return confirm('Attention ce ci va supprimer l\'utilisateur selectionnez')"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                        <!-- End small tables -->
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </section>
+
+{% endblock %}
+{% block footer %}
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base1.html.twig' %}
+
+ {% block sidebar %}
+     <!-- ======= Sidebar ======= -->
+     <aside id="sidebar" class="sidebar">
+
+         <ul class="sidebar-nav" id="sidebar-nav">
+
+             <li class="nav-item">
+                 <a class="nav-link " href="{{ path('app_user') }}">
+                     <i class="bi bi-grid"></i>
+                     <span>Calendrier</span>
+                 </a>
+             </li><!-- End Dashboard Nav -->
+             <li class="nav-item">
+
+                 <a class="nav-link collapsed" href="{{path('app_profile')  }}">
+                     <i class="bi bi-person"></i>
+                     <span>Profile</span>
+                 </a>
+             </li><!-- End Profile Page Nav -->
+
+
+             <li class="nav-item">
+                 <a class="nav-link collapsed" href="{{path('app_contact')  }}">
+                     <i class="bi bi-envelope"></i>
+                     <span>Contact</span>
+                 </a>
+             </li><!-- End Contact Page Nav -->
+
+
+             {% if app.user %}
+                 <li class="nav-item">
+                     <a class="nav-link collapsed" href="{{path('app_logout')  }}">
+                         <i class="bi bi-box-arrow-in-right"></i>
+                         <span>Déconnexion</span>
+                     </a>
+                 </li><!-- End Login Page Nav -->
+             {% endif %}
+
+         </ul>
+
+     </aside><!-- End Sidebar-->
+ {% endblock %}
+{% block body %}
+
+    <section style="margin-top: 7rem">
+        <span id='loading'></span>
+
+        <div id='calendar'>
+
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            $( ".fc-daygrid-day" ).click(function() {
+                //var date = $(this).attr('date-date') ;
+                //console.log(calendar.formatIso(arg.start));
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+

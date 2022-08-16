@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+
+        <link href="{{ asset('assets/lib/main.css')}}" rel='stylesheet' />
+
+        {% block stylesheets %}
+            <style>
+
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+                    font-size: 14px;
+                }
+
+                #top {
+                    background: #eee;
+                    border-bottom: 1px solid #ddd;
+                    padding: 0 10px;
+                    line-height: 40px;
+                    font-size: 12px;
+                }
+                .left { float: left }
+                .right { float: right }
+                .clear { clear: both }
+
+                #script-warning, #loading { display: none }
+                #script-warning { font-weight: bold; color: red }
+
+                #calendar {
+                    width: 50%;
+                    margin: 40px auto;
+                    padding: 0 10px;
+                }
+
+
+
+            </style>
+            <!-- Google Fonts -->
+            <link href="https://fonts.gstatic.com" rel="preconnect">
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+            <!-- Vendor CSS Files -->
+            <link href="{{  asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{  asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+            <link href="{{  asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+            <link href="{{  asset('assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+            <link href="{{  asset('assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+            <link href="{{  asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+            <link href="{{  asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+            <link href="{{  asset('assets/fullcalendar/main.css') }}"  rel='stylesheet' />
+            <!-- Template Main CSS File -->
+            <link href="{{  asset('assets/css/style.css') }}" rel="stylesheet">
+        {% endblock %}
+
+        {% block javascripts %}
+
+            <script src={{ asset('assets/lib/main.js') }}></script>
+            <script>
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    var initialTimeZone = 'local';
+                    var timeZoneSelectorEl = document.getElementById('time-zone-selector');
+                    var loadingEl = document.getElementById('loading');
+                    var calendarEl = document.getElementById('calendar');
+
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        timeZone: initialTimeZone,
+                        locale:'fr',
+
+                        editable: true,
+                        selectable: true,
+                        dayMaxEvents: true, // allow "more" link when too many events
+                        events: {
+                            url: 'php/get-events.php',
+                            failure: function() {
+                                document.getElementById('script-warning').style.display = 'inline'; // show
+                            }
+                        },
+                        loading: function(bool) {
+                            if (bool) {
+                                loadingEl.style.display = 'inline'; // show
+                            } else {
+                                loadingEl.style.display = 'none'; // hide
+                            }
+                        },
+
+                        eventTimeFormat: { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' },
+
+                        dateClick: function(arg) {
+                            console.log('dateClick', calendar.formatIso(arg.date));
+                        },
+                        select: function(arg) {
+                            console.log('select', calendar.formatIso(arg.start), calendar.formatIso(arg.end));
+
+                            var dateejs = calendar.formatIso(arg.start) ;
+
+
+
+                            dateejs = dateejs.substring(0, 10);
+
+
+
+                            //     window.location.href="{{ path('datedesuivie' , {datesirine:'"+dateejs+"' }) }}";
+
+                           window.location.href="http://127.0.0.1:8000/calendar/"+dateejs;
+
+
+
+                        }
+                    });
+
+                    calendar.render();
+
+                    // load the list of available timezones, build the <select> options
+                    // it's HIGHLY recommended to use a different library for network requests, not this internal util func
+                    FullCalendar.requestJson('GET', 'php/get-time-zones.php', {}, function(timeZones) {
+
+                        timeZones.forEach(function(timeZone) {
+                            var optionEl;
+
+                            if (timeZone !== 'UTC') { // UTC is already in the list
+                                optionEl = document.createElement('option');
+                                optionEl.value = timeZone;
+                                optionEl.innerText = timeZone;
+                                timeZoneSelectorEl.appendChild(optionEl);
+                            }
+                        });
+                    }, function() {
+                        // TODO: handle error
+                    });
+
+                    // when the timezone selector changes, dynamically change the calendar option
+                    timeZoneSelectorEl.addEventListener('change', function() {
+                        calendar.setOption('timeZone', this.value);
+                    });
+                });
+
+            </script>
+
+            <!-- Vendor JS Files -->
+
+            <script src="{{  asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+            <script src="{{  asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+            <script src="{{  asset('assets/vendor/chart.js/chart.min.js') }}"></script>
+            <script src="{{  asset('assets/vendor/echarts/echarts.min.js') }}"></script>
+            <script src="{{  asset('assets/vendor/quill/quill.min.js') }}"></script>
+            <script src="{{  asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+            <script src="{{  asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+            <script src="{{  asset('assets/vendor/php-email-form/validate.js') }}"></script>
+
+            <script src="{{  asset('fullcalendar/main.js') }}"></script>
+            <!-- Template Main JS File -->
+            <script src="{{ asset('assets/js/main.js') }}"></script>
+        {% endblock %}
+    </head>
+    <body>
+    {% block header %}
+        <!-- ======= Header ======= -->
+        <header id="header" class="header fixed-top d-flex align-items-center">
+
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="index.html" class="logo d-flex align-items-center">
+                    <img src="{{ asset('assets/img/hybride.png') }}" alt="">
+                    <span class="d-none d-lg-block">La Poste Tunisienne</span>
+                </a>
+            </div><!-- End Logo -->
+
+
+
+            <nav class="header-nav ms-auto">
+                <ul class="d-flex align-items-center">
+
+                    <li class="nav-item d-block d-lg-none">
+                        <a class="nav-link nav-icon search-bar-toggle " href="#">
+                            <i class="bi bi-search"></i>
+                        </a>
+                    </li><!-- End Search Icon-->
+
+{#                    <li class="nav-item dropdown">#}
+
+{#                        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">#}
+{#                            <i class="bi bi-bell"></i>#}
+{#                            <span class="badge bg-primary badge-number">4</span>#}
+{#                        </a><!-- End Notification Icon -->#}
+
+{#                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">#}
+{#                            <li class="dropdown-header">#}
+{#                                You have 4 new notifications#}
+{#                                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>#}
+{#                            </li>#}
+{#                            <li>#}
+{#                                <hr class="dropdown-divider">#}
+{#                            </li>#}
+
+{#                            <li class="notification-item">#}
+{#                                <i class="bi bi-exclamation-circle text-warning"></i>#}
+{#                                <div>#}
+{#                                    <h4>Lorem Ipsum</h4>#}
+{#                                    <p>Quae dolorem earum veritatis oditseno</p>#}
+{#                                    <p>30 min. ago</p>#}
+{#                                </div>#}
+{#                            </li>#}
+
+{#                            <li>#}
+{#                                <hr class="dropdown-divider">#}
+{#                            </li>#}
+
+{#                            <li class="notification-item">#}
+{#                                <i class="bi bi-x-circle text-danger"></i>#}
+{#                                <div>#}
+{#                                    <h4>Atque rerum nesciunt</h4>#}
+{#                                    <p>Quae dolorem earum veritatis oditseno</p>#}
+{#                                    <p>1 hr. ago</p>#}
+{#                                </div>#}
+{#                            </li>#}
+
+{#                            <li>#}
+{#                                <hr class="dropdown-divider">#}
+{#                            </li>#}
+
+{#                            <li class="notification-item">#}
+{#                                <i class="bi bi-check-circle text-success"></i>#}
+{#                                <div>#}
+{#                                    <h4>Sit rerum fuga</h4>#}
+{#                                    <p>Quae dolorem earum veritatis oditseno</p>#}
+{#                                    <p>2 hrs. ago</p>#}
+{#                                </div>#}
+{#                            </li>#}
+
+{#                            <li>#}
+{#                                <hr class="dropdown-divider">#}
+{#                            </li>#}
+
+{#                            <li class="notification-item">#}
+{#                                <i class="bi bi-info-circle text-primary"></i>#}
+{#                                <div>#}
+{#                                    <h4>Dicta reprehenderit</h4>#}
+{#                                    <p>Quae dolorem earum veritatis oditseno</p>#}
+{#                                    <p>4 hrs. ago</p>#}
+{#                                </div>#}
+{#                            </li>#}
+
+{#                            <li>#}
+{#                                <hr class="dropdown-divider">#}
+{#                            </li>#}
+{#                            <li class="dropdown-footer">#}
+{#                                <a href="#">Show all notifications</a>#}
+{#                            </li>#}
+
+{#                        </ul><!-- End Notification Dropdown Items -->#}
+
+                    </li><!-- End Notification Nav -->
+
+
+
+                    <li class="nav-item dropdown pe-3">
+
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{path('app_logout')  }}" data-bs-toggle="dropdown"><i class="bi bi-arrow-down-circle"></i>
+                            {% if app.user !=null %}
+
+                                <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
+                            {% endif %}
+                        </a><!-- End Profile Iamge Icon -->
+
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+
+
+
+
+
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ path('app_admin') }}">
+                                    <i class="bi bi-gear"></i>
+                                    <span>paramètre du compte</span>
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{{path('app_logout')  }}">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Déconnexion</span>
+                                </a>
+                            </li>
+
+                        </ul><!-- End Profile Dropdown Items -->
+                    </li><!-- End Profile Nav -->
+
+                </ul>
+            </nav><!-- End Icons Navigation -->
+
+        </header><!-- End Header -->
+
+    {% endblock %}
+
+    {% block sidebar %}
+        <!-- ======= Sidebar ======= -->
+        <aside id="sidebar" class="sidebar">
+
+            <ul class="sidebar-nav" id="sidebar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link " href="{{ path('app_calendar') }}">
+                        <i class="bi bi-grid"></i>
+                        <span>Calendrier</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ path('app_client') }}">
+
+                        <span>Client</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
+
+
+
+            </ul>
+
+        </aside><!-- End Sidebar-->
+    {% endblock %}
+
+
+
+        {% block body %}
+
+        {% endblock %}
+
+
+    {% block footer %}
+        <!-- ======= Footer ======= -->
+        <footer id="footer" class="footer text-center" style="margin-right: 19rem;">
+            <div class="copyright">
+                &copy;  <strong><span>Centre de tri postal</span></strong>
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                2021/2022
+            </div>
+        </footer><!-- End Footer -->
+
+
+
+
+
+
+
+    {% endblock %}
+
+    </body>
+</html>
